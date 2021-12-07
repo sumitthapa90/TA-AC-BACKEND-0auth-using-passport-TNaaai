@@ -6,6 +6,7 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var session = require("express-session");
 const MongoStore = require("connect-mongo");
+var passport = require("passport");
 
 require("dotenv").config();
 
@@ -38,7 +39,7 @@ app.use(
     store: MongoStore.create({ mongoUrl: "mongodb://localhost/loginGithub" }),
   })
 );
-
+app.use(passport.initialize());
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
