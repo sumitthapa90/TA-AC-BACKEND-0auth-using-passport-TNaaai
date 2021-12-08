@@ -1,5 +1,6 @@
 var passport = require("passport");
 var GitHubStrategy = require("passport-github").Strategy;
+var User = require("../models/User");
 
 passport.use(
   new GitHubStrategy(
@@ -11,18 +12,28 @@ passport.use(
     (accessToken, refreshToken, profile, done) => {
       console.log(profile);
 
-      var user = {
+      var profileData = {
         name: profile.displayName,
         email: profile._json.email,
         username: profile.username,
-        profilePik: profile._json.avatar_url,
+        profilePic: profile._json.avatar_url,
       };
-      done(null, true);
+
+      User.findOne({ email: profile._json.email }, (err, user) => {
+        if (err) return done(err);
+        if (!user) {
+          User.create(profileData, (err, addUser) => {
+            if (err) return done(err);
+            return done(null, addUser);
+          });
+        }
+        done(null, user);
+      });
     }
   )
 );
 passport.serializeUser(function (user, done) {
-  done(null, user);
+  done(null, user.id);
 });
 
 passport.deserializeUser(function (user, done) {
