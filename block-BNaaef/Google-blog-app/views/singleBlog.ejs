@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <% include partial/header %>
+    <div>
+      <p>Title : <%= blog.title %></p>
+      <p>Description: <%= blog.description %></p>
+      <p>Tags: <%= blog.tags %></p>
+      <h3>Likes: <%= blog.likes ? blog.likes : 0 %></h3>
+      <h3>Dislikes: <%= blog.dislikes ? blog.dislikes : 0 %></h3>
+    </div>
+
+    <div>
+      <a href="/blogs/<%= blog.id %>/likes"><button>Likes</button></a>
+      <a href="/blogs/<%= blog.id %>/dislikes"><button>Dislikes</button></a>
+    </div>
+
+    <div>
+      <a href="/blogs/<%= blog.id %>/edit"><button>Edit</button></a>
+      <a href="/blogs/<%= blog.id %>/delete"><button>Delete</button></a>
+    </div>
+
+    <% include partial/footer %>
+  </body>
+</html>
