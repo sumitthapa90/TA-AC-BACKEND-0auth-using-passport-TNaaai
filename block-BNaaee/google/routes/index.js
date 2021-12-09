@@ -29,17 +29,38 @@ router.get(
 
 // google
 
-app.get(
+router.get(
   "/auth/google",
-  passport.authenticate("google", { scope: ["profile"] })
+  passport.authenticate("google", { scope: ["email", "profile"] })
 );
 
-app.get(
+router.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/failure" }),
   function (req, res) {
     res.redirect("/success");
   }
 );
+
+router.get("/login", (req, res) => {
+  res.render("login");
+});
+
+router.post(
+  "/login",
+  passport.authenticate("local", { failureRedirect: "/login" }),
+  function (req, res) {
+    res.redirect("/");
+  }
+);
+
+//logout
+
+router.get("/success/logout", (req, res) => {
+  console.log(req.session);
+  req.session.destroy();
+  res.clearCookie("connect-sid");
+  res.redirect("/");
+});
 
 module.exports = router;
