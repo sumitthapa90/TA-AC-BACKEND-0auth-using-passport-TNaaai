@@ -4,13 +4,24 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+var session = require("express-session");
+const MongoStore = require("connect-mongo");
+var flash = require("connect-flash");
+var passport = require("passport");
+
+require("dotenv").config();
 
 mongoose.connect("mongodb://localhost/Google-blog-app", (err) => {
   console.log(err ? err : "Connected");
 });
 
+require("./modules/passport");
+
 var indexRouter = require("./routes/index");
 var blogsRouter = require("./routes/blogs");
+var usersRouter = require("./routes/users");
+var commentsRouter = require("./routes/comments");
+var auth = require("./middlewere/auth");
 
 var app = express();
 
@@ -26,8 +37,29 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: "mongodb://localhost/Google-blog-app",
+    }),
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(flash());
+
+app.use(auth.userInfo);
+
 app.use("/", indexRouter);
+app.use("/users", usersRouter);
 app.use("/blogs", blogsRouter);
+app.use(auth.loggedInUser);
+app.use("/comments", commentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

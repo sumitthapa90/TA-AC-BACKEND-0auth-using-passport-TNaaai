@@ -10,6 +10,7 @@ var blogSchema = new Schema(
     dislikes: { type: Number, default: 0 },
     comments: [{ type: mongoose.Schema.Types.ObjectId }],
     author: { type: String },
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   { timestamps: true }
 );
