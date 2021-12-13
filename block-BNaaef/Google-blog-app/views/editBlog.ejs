@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h2>Edit Blog</h2>
+      <form action="/blogs/<%= blog.id %>" method="POST">
+        <input
+          type="text"
+          name="title"
+          placeholder="title"
+          value="<%= blog.title %>"
+        />
+        <textarea
+          name="description"
+          cols="30"
+          rows="10"
+          placeholder="description"
+        >
+<%= blog.description %></textarea
+        >
+
+        <input
+          type="text"
+          name="tags"
+          placeholder="tags"
+          value="<%= blog.tags %>"
+        />
+
+        <input
+          type="text"
+          name="author"
+          placeholder="author"
+          value="<%= blog.author %>"
+        />
+
+        <input type="submit" value="update" />
+      </form>
+    </div>
+
+    <% include partial/footer %>
+  </body>
+</html>

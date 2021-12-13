@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <% include partial/header %>
+    <section>
+      <% blogs.forEach(blog =>{%>
+      <div>
+        <a href="/blogs/<%= blog.id %>"> <h2><%= blog.title %></h2> </a>
+      </div>
+      <% })%>
+    </section>
+
+    <% include partial/footer %>
+  </body>
+</html>

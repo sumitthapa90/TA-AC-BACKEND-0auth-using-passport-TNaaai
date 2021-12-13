@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <% include partial/header %>
+    <div>
+      <p>Title : <%= blog.title %></p>
+      <p>Description: <%= blog.description %></p>
+      <p>Tags: <%= blog.tags %></p>
+      <h3>Likes: <%= blog.likes ? blog.likes : 0 %></h3>
+      <h3>Dislikes: <%= blog.dislikes ? blog.dislikes : 0 %></h3>
+    </div>
+
+    <div>
+      <a href="/blogs/<%= blog.id %>/likes"><button>Likes</button></a>
+      <a href="/blogs/<%= blog.id %>/dislikes"><button>Dislikes</button></a>
+    </div>
+
+    <div>
+      <a href="/blogs/<%= blog.id %>/edit"><button>Edit</button></a>
+      <a href="/blogs/<%= blog.id %>/delete"><button>Delete</button></a>
+    </div>
+
+    <section>
+      <h2>Comments Section</h2>
+      <div>
+        <form action="/blogs/<%= blog.id %>/comments" method="POST">
+          <textarea
+            name="content"
+            cols="30"
+            rows="10"
+            placeholder="Comments"
+          ></textarea>
+          <div>
+            <input type="submit" value="Submit" />
+          </div>
+        </form>
+      </div>
+
+      <div>
+        <h2>Comments</h2>
+
+        <% blog.comments.forEach(comment =>{%>
+        <div>
+          <p><%= comment.content %></p>
+          <a href="/comments/<%= comment.id %>/edit"><button>Edit</button></a>
+          <a href="/comments/<%= comment.id %>/delete"
+            ><button>Delete</button></a
+          >
+        </div>
+        <% }) %>
+      </div>
+    </section>
+
+    <% include partial/footer %>
+  </body>
+</html>

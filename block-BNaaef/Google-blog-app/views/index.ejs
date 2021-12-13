@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <% include partial/header %>
+    <h1>Blog App</h1>
+
+    <a href="/blogs"><button>Go to Blogs</button></a>
+
+    <!-- <div>
+      <h3><%= user.email %></h3>
+    </div> -->
+
+    <div>
+      <a href="/auth/github">Login to github</a>
+    </div>
+    <div>
+      <a href="/auth/google">Login to Google</a>
+    </div>
+
+    <% include partial/footer %>
+  </body>
+</html>
